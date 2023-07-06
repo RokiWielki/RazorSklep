@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RazorSklep.Data;
+using RazorSklep.Models;
+
 namespace RazorSklep
 {
     public class Program
@@ -8,13 +10,20 @@ namespace RazorSklep
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            
+            // Add services to the container.
+            builder.Services.AddRazorPages();
             builder.Services.AddDbContext<RazorSklepContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("RazorSklepContext") ?? throw new InvalidOperationException("Connection string 'RazorSklepContext' not found.")));
 
-            // Add services to the container.
-            builder.Services.AddRazorPages();
-
             var app = builder.Build();
+
+            using (var moviesScope = app.Services.CreateScope())
+            {
+                var services = moviesScope.ServiceProvider;
+
+                DataMovies.Initialize(services);
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

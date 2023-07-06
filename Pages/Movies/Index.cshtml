@@ -9,8 +9,18 @@
 <h1>Filmy</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Stwórz nowy</a>
 </p>
+<form>
+    <p>
+        <p>Filtry:</p>
+        <select asp-for="MovieGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+        Tytuł: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -25,6 +35,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Movie[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].Rating)
             </th>
             <th></th>
         </tr>
@@ -45,9 +58,15 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edytuj</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Szczegóły</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Usuń</a> 
+                <input type="submit" value="Dodaj do koszyka" class="btn btn-danger" />
+
             </td>
         </tr>
 }

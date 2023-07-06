@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,20 +11,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RazorSklep.Pages.Movies
 {
-    public class IndexModel : PageModel
+    public class KoszykModel : PageModel
     {
         private readonly RazorSklep.Data.RazorSklepContext _context;
 
-        public IndexModel(RazorSklep.Data.RazorSklepContext context)
+        public KoszykModel(RazorSklep.Data.RazorSklepContext context)
         {
             _context = context;
         }
 
-        public IList<Movie> Movie { get;set; } = default!;
-        [BindProperty(SupportsGet =true)]
+        public IList<Movie> Movie { get; set; } = default!;
+        [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
-        public SelectList ? Genres { get; set; }
-        [BindProperty(SupportsGet =true)]
+        public SelectList? Genres { get; set; }
+        [BindProperty(SupportsGet = true)]
         public string? MovieGenre { get; set; }
 
         public async Task OnGetAsync()
@@ -64,7 +64,7 @@ namespace RazorSklep.Pages.Movies
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Koszyk");
         }
     }
 }
